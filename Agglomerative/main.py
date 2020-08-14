@@ -1,7 +1,15 @@
 edges = [[0,1,2,2,3],[1,0,2,4,3],[2,2,0,1,5],[2,4,1,0,3],[3,3,5,3,0]]
 
 vertii = ['A','B','C','D','E']
+#          0   1   2   3   4
 
+pos = {
+  'A':0,
+  'B':1,
+  'C':2,
+  'D':3,
+  'E':4
+}
 
 #hard coded all edges!
 n = 5
@@ -25,7 +33,7 @@ while k>1:
           othercluster = clusters[j]
           for othervertex in othercluster:
             if othervertex != vertex:
-              distance = edges[vertii.index(vertex)][vertii.index(othervertex)]
+              distance = edges[pos[vertex]][pos[othervertex]]
                 #get edge value from graph!
               if distance <= d:
                 clusters[i] = cluster + othercluster
