@@ -5,8 +5,8 @@ vertii = ['A','B','C','D','E']
 
 #hard coded all edges!
 n = 5
-d = 0 
-k = n
+d = 0 #threshold
+k = n # no of clusters
 clusters  =  [ [val] for val in vertii ]
 
 print("<",d,",",k,",",clusters,">")
