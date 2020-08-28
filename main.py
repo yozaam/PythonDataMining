@@ -13,7 +13,7 @@ def lowerBound(data , target):
   start = 0
   jump = n//2
   while(jump>=1):
-    print("jump:",jump)
+    # print("jump:",jump)
     while(start+jump<n):
       if(data[jump+start][2]<target):
         # safe to jump here!
@@ -39,7 +39,7 @@ def kClosest(start, target, k, data):
 
     # if up or down have gone outside boundary !
     # just pick whoever is indside boundary!!
-    if(down >= len(data) and up<0):
+    if(down >= len(data) and up<0) or (up>=len(data)):
       # cant pick anyone more... k is bigger than the list size!!!!
       return knn
     elif up<0:
@@ -72,13 +72,15 @@ def majority(knn, trainingData) :
   resultCount = 0
 
   for index in knn:
+    if index<0 or index>=len(trainingData):
+      continue
     category = trainingData[index][3]
     count[category]+=1
     if resultCount < count[category]:
       resultCount = count[category]
       result = category
   
-  return category
+  return result
 
 trainingData = [['Kristina', 'F', '1.6m', 'Short'], ['Jim', 'M', '2m', 'Tall'], ['Maggie', 'F', '1.9m', 'Medium'], ['Martha', 'F', '1.88m', 'Medium'], ['Stephanie', 'F', '1.7m', 'Short'], ['Bob', 'M', '1.85m', 'Medium'], ['Kathy', 'F', '1.6m', 'Short'], ['Dave', 'M', '1.7m', 'Short'], ['Worth', 'M', '2.2m', 'Tall'], ['Steven', 'M', '2.1m', 'Tall'], ['Debbie', 'F', '1.8m', 'Medium'], ['Todd', 'M', '1.95m', 'Medium'], ['Kim', 'F', '1.9m', 'Medium'], ['Amy', 'F', '1.8m', 'Medium'], ['Wynette', 'F', '1.75m', 'Medium']]
 
@@ -103,5 +105,26 @@ print(position)
 # should return index of 1.7 in trainingData?
 
 knn = kClosest(position, 1.7, 3 ,trainingData)
-print(knn)
+
+print('for 1.7 we have class = ')
+print(majority(knn, trainingData))
+
+while 1:
+  print('Now you enter a persons height(0 to 3 meters)\n and I will classify!')
+
+  h = float(input())
+  print("where is ",h)
+  position = lowerBound(trainingData, h)
+  print(position)
+  # should return index of h in trainingData?
+
+  knn = kClosest(position, h, 3 ,trainingData)
+  print(h,' neighbors are ' , knn)
+
+  print('for ',h,' we have class = ')
+  print(majority(knn, trainingData))
+
+
+
+
 
