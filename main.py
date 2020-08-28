@@ -1,48 +1,45 @@
-edges = [[0,1,2,2,3],[1,0,2,4,3],[2,2,0,1,5],[2,4,1,0,3],[3,3,5,3,0]]
+# trainingData = []
 
-vertii = ['A','B','C','D','E']
+# for i in range(15):
+#   trainingData.append(input().split(","))
+
+#print(trainingData)
+
+# finds the position of height in sorted list
+# using binary search hvariant as seen here:
+# https://www.topcoder.com/binary-stride-a-variant-on-binary-search/
+def finder(data , target):
+  n = len(data)
+  start = 0
+  jump = n//2
+  while(jump>=1):
+    while(start+jump<n):
+      if(data[jump+start][2]<target):
+        # safe to jump here!
+        start+=jump
+
+    jump/=2
+
+  return start 
+  # return the closest value >= target
+
+trainingData = [['Kristina', 'F', '1.6m', 'Short'], ['Jim', 'M', '2m', 'Tall'], ['Maggie', 'F', '1.9m', 'Medium'], ['Martha', 'F', '1.88m', 'Medium'], ['Stephanie', 'F', '1.7m', 'Short'], ['Bob', 'M', '1.85m', 'Medium'], ['Kathy', 'F', '1.6m', 'Short'], ['Dave', 'M', '1.7m', 'Short'], ['Worth', 'M', '2.2m', 'Tall'], ['Steven', 'M', '2.1m', 'Tall'], ['Debbie', 'F', '1.8m', 'Medium'], ['Todd', 'M', '1.95m', 'Medium'], ['Kim', 'F', '1.9m', 'Medium'], ['Amy', 'F', '1.8m', 'Medium'], ['Wynette', 'F', '1.75m', 'Medium']]
+
+for data in trainingData:
+  data[2] = data[2][:-1]
+  # remove last 'm' from height
+  data[2] = float(data[2])
+
+print(trainingData)
+
+trainingData.sort(key = lambda x: (x[2])) 
+
+# print(trainingData)
+
+# now it is sorted ! just going to binarysearch 
+# for each value in classifier! and find closest 
+# points to it above and below!!!
 
 
-#hard coded all edges!
-n = 5
-d = 0 
-k = n
-clusters  =  [ [val] for val in vertii ]
-
-print("<",d,",",k,",",clusters,">")
-
-while k>1:
-  oldk = k
-  d = d+1
-  #now i have to merge them somehow!
-  #for each clusters
-  #go through the edges find if anyone has a distance of <=d
-  for i in range(0,len(clusters)):
-    cluster = clusters[i]
-    for vertex in cluster:
-      for j in range(0,len(clusters)):
-        if i!=j:
-          othercluster = clusters[j]
-          for othervertex in othercluster:
-            if othervertex != vertex:
-              distance = edges[vertii.index(vertex)][vertii.index(othervertex)]
-                #get edge value from graph!
-              if distance <= d:
-                clusters[i] = cluster + othercluster
-                clusters[j] = []
-                #delte old guy and put the merge!
-        #checking all my neighbours if any of them 
-        #is inside the distance threshold
-        #that cluster and add it to my cluster!
-        
-  #remove all empty clusters
-  clusters = [cluster for cluster in clusters if cluster != []] 
-  k = len(clusters)
-  print("<",d,",",k,",",clusters,">")
-
-  #BAD COMPLEXITY! Should try union find!
-  #OUTPUT:
-# < 0 , 5 , [['A'], ['B'], ['C'], ['D'], ['E']] >
-# < 1 , 3 , [['A', 'B'], ['C', 'D'], ['E']] >
-# < 2 , 2 , [['A', 'B', 'C', 'D'], ['E']] >
-# < 3 , 1 , [['A', 'B', 'C', 'D', 'E']] >
+print(finder(trainingData, 1.7))
+# should return index of 1.7 in trainingData?
